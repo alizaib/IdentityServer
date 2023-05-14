@@ -9,7 +9,7 @@ using System.Net.Http.Headers;
 
 namespace MvcClient.Controllers
 {
-    [Authorize]
+
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -24,6 +24,7 @@ namespace MvcClient.Controllers
             return View();
         }
 
+        [Authorize]
         public IActionResult Privacy()
         {
             return View();
@@ -50,6 +51,11 @@ namespace MvcClient.Controllers
         public IActionResult Logout()
         {
             return SignOut("Cookies", "oidc");
+        }
+
+        public IActionResult Login()
+        {
+            return Challenge(new AuthenticationProperties { RedirectUri = "/Home/Index" }, "oidc");
         }
     }
 }

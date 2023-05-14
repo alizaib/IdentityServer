@@ -28,9 +28,13 @@ var mgr = new Oidc.UserManager(config);
 
 mgr.getUser().then(function (user) {
     if (user) {
+        document.getElementById("login").style.display = "none";
+        document.getElementById("logout").style.display = "block";
         log("User logged in", user.profile);
     }
     else {
+        document.getElementById("logout").style.display = "none";
+        document.getElementById("login").style.display = "block";
         log("User not logged in");
     }
 });
@@ -46,7 +50,8 @@ function api() {
         var xhr = new XMLHttpRequest();
         xhr.open("GET", url);
         xhr.onload = function () {
-            log(xhr.status, JSON.parse(xhr.responseText));
+            //log(xhr.status, JSON.parse(xhr.responseText));
+            log("Successfully called secured API by: " + user.profile.name + " at " + new Date().toLocaleTimeString());
         }
         xhr.setRequestHeader("Authorization", "Bearer " + user.access_token);
         xhr.send();
